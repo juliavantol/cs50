@@ -1,0 +1,6 @@
+# Prompt for height
+
+Loop
+# Print number of height rows of x's
+    Loop
+    # Print x's per row
