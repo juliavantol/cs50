@@ -1,31 +1,52 @@
 #include <stdio.h>
 #include <cs50.h>
 
-void hash(int count);
+int main(void) 
 
-int main(void) {
+{
 
-    // Prompt user for height of pyramid
+    // prompt user for height of pyramid
     int height;
     do
     {
+
         height = get_int("Height: ");
-    } while (height < 0 || height > 8);
-    
-    int count = 1;
+
+    } 
+    while (height <= 0 || height > 8);
+
+    // create a row with every iteration 
+    int line = 1;
     for (int vertical_rows = 0; vertical_rows < height; vertical_rows++)
     {
-        hash(count);
+        // for each row
+        // print spaces
+        int spaces = height - line;
+        for (int j = 0; j < spaces; j++) 
+        {
+            printf(" ");
+        } 
+
+        // print left hashes
+        for (int i = 0; i < line; i++) 
+        {   
+            printf("#");
+        } 
+
+        // print gap
+        for (int gap = 0; gap < 2; gap++) 
+        {   
+            printf(" ");
+        } 
+
+        // print left hashes
+        for (int i = 0; i < line; i++) 
+        {   
+            printf("#");
+        } 
+      
         printf("\n");
-        count++;
+        line++;
     }
 
-
-}
-
-void hash(int count)
-{
-    for (int i = 0; i < count; i++) {
-        printf("x");
-    }
 }
