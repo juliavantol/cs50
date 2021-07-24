@@ -17,18 +17,18 @@ int main(void)
 
     // create a row with every iteration 
     int line = 1;
-    for (int vertical_rows = 0; vertical_rows < height; vertical_rows++)
+    for (int rows = 0; rows < height; rows++)
     {
         // for each row
         // print spaces
         int spaces = height - line;
-        for (int j = 0; j < spaces; j++) 
+        for (int i = 0; i < spaces; i++) 
         {
             printf(" ");
         } 
 
         // print left hashes
-        for (int i = 0; i < line; i++) 
+        for (int j = 0; j < line; j++) 
         {   
             printf("#");
         } 
@@ -39,8 +39,8 @@ int main(void)
             printf(" ");
         } 
 
-        // print left hashes
-        for (int i = 0; i < line; i++) 
+        // print right hashes
+        for (int r = 0; r < line; r++) 
         {   
             printf("#");
         } 
