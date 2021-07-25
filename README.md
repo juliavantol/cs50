@@ -3,10 +3,12 @@
 <p align="center"><project-description>An overview of the projects completed for the CS50 course</p>
 
 # Contents
-- Mario
+- Mario <br>
 prints a pyramid
-- Cash
+- Cash <br>
 a program that first asks the user how much change is owed and then prints the minimum number of coins with which that change can be made
+- Credit <br>
+a program that prompts the user for a credit card number and then reports whether it is a valid American Express, MasterCard, or Visa card number
 
 ## Built With
 
