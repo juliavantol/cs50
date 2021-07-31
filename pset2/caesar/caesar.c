@@ -28,10 +28,39 @@ int main (int argc, string argv[])
     int n = strlen(plaintext);
     // string ciphertext[]; 
     char x;
+    printf("ciphertext: ");
     for (i = 0, j = 0; i < n; i++)
     {
-        x = plaintext[i] + key;
-        printf("%c", x);
+        if (isalpha(plaintext[i]))
+        {
+            // convert ascii to alphabetical index (a = 0) 64
+            int ascii_value = plaintext[i];
+            if (islower(plaintext[i]))
+            {
+                int alpha_index = ascii_value - 96;
+
+                // shift key places
+                int new_value = (alpha_index + key) % 26;
+
+                // convert back to ascii
+                int back_ascii = new_value + 96;
+                printf("%c", back_ascii);
+            }
+            else 
+            {
+                int alpha_index = ascii_value - 64;
+                // shift key places
+                int new_value = (alpha_index + key) % 26;
+                // convert back to ascii
+                int back_ascii = new_value + 64;
+                printf("%c", back_ascii);
+            }
+        }
+        else {
+            printf("%c", plaintext[i]);
+
+        }
+
     }
     printf("\n");
 

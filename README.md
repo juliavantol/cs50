@@ -11,6 +11,8 @@ a program that first asks the user how much change is owed and then prints the m
 a program that prompts the user for a credit card number and then reports whether it is a valid American Express, MasterCard, or Visa card number
 - Scrabble <br>
 a program that determines the winner of a short scrabble-like game, where two players each enter their word, and the higher scoring player wins
+- readability <br>
+takes a text and determines its reading level
 
 ## Built With
 
