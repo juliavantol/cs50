@@ -28,7 +28,6 @@ int main(int argc, string argv[])
         return 1;
     }
     
-
     string key = argv[1];
     
 
@@ -89,24 +88,23 @@ bool check_alpha(string key)
 
 bool check_multiple(string key)
 {
-    int i;
+    int i, j;
     int n = strlen(key);
-    char characters[n];
 
-    for (i = 0; i < n; i++)
+    // check each character in key
+    // compare each letter to the others
+    for (i = 0; i < n; i ++)
     {
-        
-        if (strchr(characters, key[i]))
+        for (j = 0; j < i; j++)
         {
-            printf("%s\n", characters);
-            return false;
+            if (key[i] == key[j])
+            {
+                return false;
+            }
         }
-        else 
-        {
-            characters[i] = key[i];
-        }
-        
+
     }
+
     return true;
 }
 
