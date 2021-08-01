@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "__locale": "c",
-        "ios": "c"
+        "ios": "c",
+        "__node_handle": "c"
     }
 }

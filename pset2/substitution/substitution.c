@@ -4,16 +4,16 @@
 #include <string.h>
 
 bool check_alpha(string key);
-bool check_multiple(string key);
+bool check_duplicates(string key);
 void calculate_cipher(char character, string key, int capitalization);
 
 // Main takes in an integer as input and an array of string
 int main(int argc, string argv[])
 {
     // If number of arguments is 2 and input is numbers, reject input and end program
-    if (argc != 2 || check_alpha(argv[1]) == false)
+    if (argc != 2)
     {
-        printf("Usage: ./caesar key\n");
+        printf("Usage: ./caesar key.\n");
         return 1;
     }
     if (strlen(argv[1]) != 26)
@@ -22,19 +22,22 @@ int main(int argc, string argv[])
         return 1;  
     }
 
-    if (check_multiple(argv[1]) == false)
+    if (check_duplicates(argv[1]) == false)
     {
-        printf("Key contains multiples\n");
+        printf("Key contains repeated characters.\n");
+        return 1;
+    }
+    if (check_alpha(argv[1]) == false)
+    {
+        printf("Please only use alphabetical characters.\n");
         return 1;
     }
     
+    // Put input into key variable
     string key = argv[1];
     
-
     // Ask input
     string plaintext = get_string("plaintext: ");
-
-  
 
     int i, j, n;
     char x;
@@ -49,26 +52,22 @@ int main(int argc, string argv[])
             // If uppercase the ASCII value to go to 0 is 64
             if (islower(plaintext[i]))
             {
-                // CHANGE
                 calculate_cipher(plaintext[i], key, 96);
             }
             else 
             {   
-                // CHANGE
                 calculate_cipher(plaintext[i], key, 64);
             }
         }
         else 
         {
             printf("%c", plaintext[i]);
-
         }
     }
     printf("\n");
-
 }
 
-// Check if the command line argument is alphabetic
+// Check if the key is alphabetic
 bool check_alpha(string key)
 {
     int i, n;
@@ -80,31 +79,27 @@ bool check_alpha(string key)
         {
             return false;
         }
-        
     }
-    
     return true;
 }
 
-bool check_multiple(string key)
+// Check if there are repeated characters in key
+bool check_duplicates(string key)
 {
     int i, j;
     int n = strlen(key);
-
-    // check each character in key
-    // compare each letter to the others
+    // Compare each letter of the key to the others
     for (i = 0; i < n; i ++)
     {
         for (j = 0; j < i; j++)
         {
+            // If a duplicate is found, return false and reject input
             if (key[i] == key[j])
             {
                 return false;
             }
         }
-
     }
-
     return true;
 }
 
@@ -112,26 +107,20 @@ bool check_multiple(string key)
 void calculate_cipher(char character, string key, int capitalization)
 {
     // Convert to alphabetical value by subtracting 97 or 64, depending on lowercase/uppercase
-    int alpha = character - capitalization;
+    int alpha = (character - capitalization) - 1;
+    char cipher_character = key[alpha];
 
-    int x = alpha - 1;
-    char cipher_character = key[x];
-
+    // Keep the capitalisation of plaintext character intact
     if (isupper(cipher_character) && islower(character))
     {
-        char lower = tolower(cipher_character);
-        printf("%c", lower);
+        printf("%c", tolower(cipher_character));
     }
     else if (islower(cipher_character) && isupper(character))
     {
-        char upper = toupper(cipher_character);
-        printf("%c", upper);
+        printf("%c", toupper(cipher_character));
     }
     else 
     {
         printf("%c", cipher_character);
     }
-
-    
-
 }
