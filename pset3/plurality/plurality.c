@@ -59,8 +59,6 @@ int main(int argc, string argv[])
         }
     }
 
-    printf("\n");
-
     // Display winner of election
     print_winner();
 
@@ -69,7 +67,7 @@ int main(int argc, string argv[])
 // Update vote totals given a new vote
 bool vote(string name)
 {
-    // find someone
+    // See if the name is in the candidate array and if so, add 1 to their votes
     for (int i = 0; i < candidate_count; i++)
     {
         if (strcmp(candidates[i].name, name) == 0)
@@ -84,37 +82,42 @@ bool vote(string name)
 // Print the winner (or winners) of the election
 void print_winner(void)
 {
-    // sort
-    int i, j, a;
-    string b;
+    // Sort the candidates so the highest scores go in front of the array
+    int i, j, placeholder_votes;
+    string placeholder_name;
     for (i = 0; i < candidate_count; ++i) 
     {
         for (j = i + 1; j < candidate_count; ++j) 
         {
             if (candidates[i].votes < candidates[j].votes) 
             {
-                a = candidates[i].votes;
+                placeholder_votes = candidates[i].votes;
                 candidates[i].votes = candidates[j].votes;
-                candidates[j].votes = a;
+                candidates[j].votes = placeholder_votes;
 
-                b = candidates[i].name;
+                placeholder_name = candidates[i].name;
                 candidates[i].name = candidates[j].name;
-                candidates[j].name = b;
+                candidates[j].name = placeholder_name;
             }
         }
     }
 
+    // Print the first name in the array aka the one with the highest amount of votes
     printf("%s\n", candidates[0].name);
-    int x;
 
+    // Look if there are other candidates that share the highest amount of votes of number 1
+    // Stop immediately if the second one isn't the same score as number 1 cause that means all
+    // others will be lower as well
+    int x;
     for (x = 1; x < candidate_count; ++x) 
     {
         if (candidates[0].votes == candidates[x].votes) 
         {
             printf("%s\n", candidates[x].name);
         }
-        
+        else 
+        {
+            break;
+        }
     }
-
 }
-
