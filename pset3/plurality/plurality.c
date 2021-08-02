@@ -43,7 +43,6 @@ int main(int argc, string argv[])
     {
         candidates[i].name = argv[i + 1];
         candidates[i].votes = 0;
-        printf("name: %s vote: %i \n", candidates[i].name, candidates[i].votes);
     }
 
     int voter_count = get_int("Number of voters: ");
@@ -60,13 +59,11 @@ int main(int argc, string argv[])
         }
     }
 
-    for (int i = 0; i < candidate_count; i++)
-    {
-        printf("name: %s vote: %i \n", candidates[i].name, candidates[i].votes);
-    }
+    printf("\n");
 
     // Display winner of election
     print_winner();
+
 }
 
 // Update vote totals given a new vote
@@ -87,16 +84,37 @@ bool vote(string name)
 // Print the winner (or winners) of the election
 void print_winner(void)
 {
-    int top_score = 0;
-    string winner;
-    for (int i = 0; i < candidate_count; i++)
+    // sort
+    int i, j, a;
+    string b;
+    for (i = 0; i < candidate_count; ++i) 
     {
-        if (candidates[i].votes > top_score)
+        for (j = i + 1; j < candidate_count; ++j) 
         {
-            top_score = candidates[i].votes;
-            winner = candidates[i].name;
+            if (candidates[i].votes < candidates[j].votes) 
+            {
+                a = candidates[i].votes;
+                candidates[i].votes = candidates[j].votes;
+                candidates[j].votes = a;
+
+                b = candidates[i].name;
+                candidates[i].name = candidates[j].name;
+                candidates[j].name = b;
+            }
         }
     }
-    printf("%s\n", winner);
+
+    printf("%s\n", candidates[0].name);
+    int x;
+
+    for (x = 1; x < candidate_count; ++x) 
+    {
+        if (candidates[0].votes == candidates[x].votes) 
+        {
+            printf("%s\n", candidates[x].name);
+        }
+        
+    }
+
 }
 
