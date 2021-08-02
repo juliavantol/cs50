@@ -1,0 +1,15 @@
+sort1 uses: Bubble
+
+How do you know?: There's a big difference between sorted and random. With the worst case, random,
+the running time was very slow but the best case, sorted, ran very quickly because it only
+has to go through the array once.
+
+sort2 uses: Merge
+
+How do you know?: The running time was generally the fastest. It was the same with random and sorted list which
+which corresponds with the merge sort.
+
+sort3 uses: Selection
+
+How do you know?: It was the slowest at both random and sorted searches. It was especially slow with the 
+worst case, random, search because it keeps looking for the lowest value.
