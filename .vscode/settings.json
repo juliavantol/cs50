@@ -2,6 +2,9 @@
     "files.associations": {
         "__locale": "c",
         "ios": "c",
-        "__node_handle": "c"
+        "__node_handle": "c",
+        "bitset": "c",
+        "algorithm": "c",
+        "typeinfo": "c"
     }
 }
