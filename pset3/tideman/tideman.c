@@ -29,11 +29,13 @@ int voter_count;
 
 // Function prototypes
 bool vote(int rank, string name, int ranks[]);
+bool is_cycle(int loser, int winner);
 void record_preferences(int ranks[]);
 void add_pairs(void);
 void sort_pairs(void);
 void lock_pairs(void);
 void print_winner(void);
+
 
 int main(int argc, string argv[])
 {
@@ -66,14 +68,11 @@ int main(int argc, string argv[])
     }
 
     pair_count = 0;
-    voter_count = get_int("Number of voters: ");
-    // ranks[i] is voter's ith preference
-    
+    voter_count = get_int("Number of voters: ");    
 
     // Query for votes
     for (int i = 0; i < voter_count; i++)
     {
-        
         int ranks[candidate_count];
         // Query for each rank
         for (int j = 0; j < candidate_count; j++)
@@ -101,75 +100,52 @@ int main(int argc, string argv[])
 // Update ranks given a new vote
 bool vote(int rank, string name, int ranks[])
 {
-    int i;
-    for (i = 0; i < candidate_count; i++)
+    for (int i = 0; i < candidate_count; i++)
     {
+        // If the name is in the candidates array, update ranks
         if (strcmp(candidates[i], name) == 0)
         {
-            // update the ranks array to indicate that the voter has the candidate as
-            // their rank preference (where 0 is the first preference,
-            // 1 is the second preference
-
-            // recall that ranks[i] here represents the user’s ith preference
             ranks[rank] = i;
-            // ranks[rank] returns the index of the candidate
             return true;
         }
-
     }
     return false;
 }
 
 // Update preferences given one voter's ranks
-// take ranks and update the global preferences variable
-
-// called once for each voter and takes input user's ranks
 void record_preferences(int ranks[])
 {
-    // First, notice the two-dimensional array preferences. 
-    // The integer preferences[i][j] will represent the number of 
-    // voters who prefer candidate i over candidate j.
-
-    // ranks[rank] returns candidate ID
-    int i, j;
-
+    // Loop through their rankings
     for (int rank = 0; rank < candidate_count; rank ++)
     {
         for (int inner = (rank + 1); inner < candidate_count; inner++)
         {
-            // printf("prefers id %i over id %i\n", X, Y);
-            // printf("candidate %i, huh %i\n", ranks[rank], ranks[inner]);
+            // Update preferences array to add their preferences
             preferences[ranks[rank]][ranks[inner]] += 1;
         }
-
     }
-
-    return;
 }
 
 // Record pairs of candidates where one is preferred over the other
 void add_pairs(void)
 {
-    // Array of all pairs where one candidate is preferred above another
-
-    // Add each pair of candidates to pairs array if 
-    // one candidate if preferred over the other
-
-    // Update global variable pair_count to be total number of pairs
-
-    // maybe compare preferences[i][j] and preferences[j][i] see who wins
-
     int i = 0;
     for (int can1 = 0; can1 < candidate_count; can1 ++)
     {
         for (int can2 = (can1 + 1); can2 < candidate_count; can2++)
         {
+            // Calculate how many prefer one pairing over the other
+            // Compare the results and see who wins
             int can1_result = preferences[can1][can2];
             int can2_result = preferences[can2][can1];
+
+            // Add each pair of candidates to pairs array if one candidate if preferred over the other
             if (can1_result > can2_result)
             { 
                 pairs[i].winner = can1;
                 pairs[i].loser = can2;
+
+                // Update pair_count to be total number of pairs
                 pair_count += 1;
                 i++;
             }
@@ -177,12 +153,13 @@ void add_pairs(void)
             {
                 pairs[i].winner = can2;
                 pairs[i].loser = can1;
+
+                // Update pair_count to be total number of pairs
                 pair_count += 1;
                 i++;
             }
         }
     }
-    return;
 }
 
 // Sort pairs in decreasing order by strength of victory
@@ -190,66 +167,88 @@ void sort_pairs(void)
 {
     for (int i = 0; i < pair_count; i++)
     {
-        int check_strength = preferences[pairs[i].winner][pairs[i].loser];
-        printf("%i\n", check_strength);
+        for (int j = i + 1; j < pair_count; j++)
+        {
+            // Calculate strength of victory of both pairs
+            int strength1 = preferences[pairs[i].winner][pairs[i].loser];
+            int strength2 = preferences[pairs[j].winner][pairs[j].loser];
+            
+            // Swap if the one on the right is a higher value
+            if (strength1 < strength2)
+            {
+                int placeholder_winner = pairs[i].winner;
+                int placeholder_loser = pairs[i].loser;
+                pairs[i].winner = pairs[j].winner;
+                pairs[i].loser = pairs[j].loser;
+
+                pairs[j].winner = placeholder_winner;
+                pairs[j].loser = placeholder_loser;
+            }
+        }
     }
-    return;
 }
 
 // Lock pairs into the candidate graph in order, without creating cycles
 void lock_pairs(void)
 {
-    // TODO
-    return;
+    // Go through the pairs one at the time and lock them in the graph
+    for (int i = 0; i < pair_count; i++)
+    {
+        int winner = pairs[i].winner;
+        int loser = pairs[i].loser;
+
+        // If the function that checks if it will create a cycle returns false, lock the pair
+        if (is_cycle(loser, winner) == false)
+        {
+            locked[winner][loser] = true;
+        }
+    }
+}
+
+// Check if a cycle will be created
+bool is_cycle(int loser, int winner)
+{
+    // If an instance points at itself, cycle is created
+    if (winner == loser)
+    {
+        return true;
+    }
+
+    // Check through locked pairs if the current loser has won somewhere
+    for (int i = 0; i < candidate_count; i++)
+    {
+        // If the current loser has been found to win somewhere else, run function again
+        if (locked[loser][i] == true)
+        {
+            if (is_cycle(i, winner) == true)
+            {
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 // Print the winner of the election
 void print_winner(void)
 {
-    // TODO
-    return;
+    // Find the person who doesn't have any arrows pointed to them
+    for (int potential_winner = 0; potential_winner < candidate_count; potential_winner++)
+    {
+        // Keep count of how many times a candidate lost
+        int lost_count = 0;
+        for (int i = 0; i < candidate_count; i++)
+        {
+            if (locked[i][potential_winner] == true)
+            {
+                lost_count++;
+            }
+        }
+
+        // If they never lost, no arrows are pointing to them thus they are the winner
+        if (lost_count == 0)
+        {
+            printf("%s\n", candidates[potential_winner]);
+        }
+    }
 }
-
-// to get a certain place do ranks[rank]
-    // ranks[0] will get first choice candidate
-    // int i, j;
-
-    // // query through EACH voter
-    // for (i = 0; i < voter_count; i++)
-    // {
-    //     // for each voter
-    //     // loop through their preferences
-    //     for (j = 0; j < candidate_count; j++)
-    //     {
-    //         preferences[ranks[i]][ranks[j]] = preferences[ranks[i]][ranks[j]];
-    //         // preferences[i][j] returns the rank
-    //     }
-
-    // }
-    //preferences[0][0] gives first choice of first voter
-    // first [x] is the ranking place and second [x] is candidate ID
-    // printf("Test: %i\n", preferences[0][2]);
-
-       // For each voter
-    // int i, j;
-    // for (i = 0; i < voter_count; i++)
-    // {
-    //     // For each rank, print candidate
-    //     for (j = 0; j < candidate_count; j++)
-    //     {
-    //         printf("Rank %i: ID %i\n", j, preferences[i][j]);
-        
-    //     }
-    //     printf("\n");
-    // }
-
-     // loop over the rankings 
-    // for (int rank = 0; rank < candidate_count; rank ++)
-    // {
-    //     for (int left = candidate_count; left > 0; left--)
-    //     {
-    //         // printf("prefers id %i over id %i\n", X, Y);
-    //         printf("rank %i left %i\n", ranks[rank], left);
-    //     }
-        
-    // }
