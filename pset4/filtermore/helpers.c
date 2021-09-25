@@ -118,14 +118,23 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
     // Copy image in an array
     RGBTRIPLE copyImage[height][width];
 
+    // Store the gx and gy values in 2D arrays for easy referencing
+    int gx[3][3] = 
+    {
+        {-1, 0, 1},
+        {-2, 0, 2},
+        {-1, 0, 1}
+    };
 
-    float gxredSum = 0.0;
-    float gxgreenSum = 0.0;
-    float gxblueSum = 0.0;
-
-    float gyredSum = 0.0;
-    float gygreenSum = 0.0;
-    float gyblueSum = 0.0;
+    int gy[3][3] = 
+    {
+        {-1, -2, -1},
+        {0, 0, 0},
+        {1, 2, 1}
+    };
+ 
+    float gxred, gxblue, gxgreen, gyred, gygreen, gyblue, gxredSum, gxgreenSum, gxblueSum, gyredSum, gygreenSum, gyblueSum;
+    int i, j, squareRow, squareWidth;
 
     // Loop through all the rows
     for (int row = 0; row < height; row++)
@@ -142,112 +151,55 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
             gygreenSum = 0.0;
             gyblueSum = 0.0;
 
-            int gx = 1;
-
-            // printf("current pixel: {%d, %d, %d} \n", array[row][pixel].rgbtBlue, array[row][pixel].rgbtGreen, array[row][pixel].rgbtRed);
             // Loop around the pixel to make a square
-            for (int squareRow = 1; squareRow > -2; squareRow--)
+            for (squareRow = 1, i = 0; squareRow > -2; squareRow--, i++)
             {
-
-                if (squareRow == 0)
+                for (squareWidth = 1, j = 0; squareWidth > -2; squareWidth--, j++)
                 {
-                    gx = 2;
-                }
-                else
-                {
-                    gx = 1;
-                }
+                    // If the pixel is out of bounds, set it to 0.0
+                    if (checkPixel((row + squareRow), (pixel + squareWidth), height, width) == true)
+                    {
+                        gxblue = image[row + squareRow][pixel + squareWidth].rgbtBlue * gx[i][j];
+                        gxgreen = image[row + squareRow][pixel + squareWidth].rgbtGreen * gx[i][j];
+                        gxred = image[row + squareRow][pixel + squareWidth].rgbtRed * gx[i][j];
 
-                for (int squareWidth = 1; squareWidth > -2; squareWidth--)
-                {
+                        gyblue = image[row + squareRow][pixel + squareWidth].rgbtBlue * gy[i][j];
+                        gygreen = image[row + squareRow][pixel + squareWidth].rgbtGreen * gy[i][j];
+                        gyred = image[row + squareRow][pixel + squareWidth].rgbtRed * gy[i][j];
+                    } 
+                    else 
+                    {
+                        gxred = 0.0;
+                        gxgreen = 0.0;
+                        gxblue = 0.0;
+                        gyblue = 0.0;
+                        gygreen = 0.0;
+                        gyred = 0.0;
+                    }
 
-                    float gxblue = image[row + squareRow][pixel + squareWidth].rgbtBlue * gx;
-                    float gxgreen = image[row + squareRow][pixel + squareWidth].rgbtGreen * gx;
-                    float gxred = image[row + squareRow][pixel + squareWidth].rgbtRed * gx;
-
+                    // Add the calculated values to their sum
                     gxredSum += gxred;
                     gxgreenSum += gxgreen;
                     gxblueSum += gxblue;
-                    
-                    // printf("gx: {%d, %d, %d} * %i   ", array[row + squareRow][pixel + squareWidth].rgbtBlue, array[row + squareRow][pixel + squareWidth].rgbtGreen, array[row + squareRow][pixel + squareWidth].rgbtRed, gx);
-                    if (squareRow == 0)
-                    {
-                        gx = gx - 2;
-                    }
-                    else
-                    {
-                        gx = gx - 1;
-                    }
-
-                }
-               
-            }
-
-
-            int gy = -1;
-            int squareWidth = -1;
-            // Loop around the pixel to make a square
-            for (squareWidth = -1; squareWidth < 2; squareWidth++)
-            {
-                
-                if (squareWidth == 0)
-                {
-                    gy = -2;
-                }
-                else
-                {
-                    gy = -1;
-                }
-
-                for (int squareRow = -1; squareRow < 2; squareRow++)
-                {
-                    
-                    float gyblue = image[row + squareRow][pixel + squareWidth].rgbtBlue * gy;
-                    float gygreen = image[row + squareRow][pixel + squareWidth].rgbtGreen * gy;
-                    float gyred = image[row + squareRow][pixel + squareWidth].rgbtRed * gy;
 
                     gyredSum += gyred;
                     gygreenSum += gygreen;
                     gyblueSum += gyblue;
-
-                   // printf("gy: {%d, %d, %d} * %i  ", array[row + squareRow][pixel + squareWidth].rgbtBlue, array[row + squareRow][pixel + squareWidth].rgbtGreen, array[row + squareRow][pixel + squareWidth].rgbtRed, gy);
-                    
-                    if (squareWidth == 0)
-                    {
-                        gy = gy + 2;
-                    }
-                    else
-                    {
-                        gy = gy + 1;
-                    }
-
+                        
                 }
-   
-
-
             }
 
+            // Calculate final color values
             float newRed = roundf(sqrt((gxredSum * gxredSum) + (gyredSum * gyredSum)));
             float newGreen = roundf(sqrt((gxgreenSum * gxgreenSum) + (gygreenSum * gygreenSum)));
             float newBlue = roundf(sqrt((gxblueSum * gxblueSum) + (gyblueSum * gyblueSum)));
 
+            // Cap the values at 255
+            newRed = newRed > 255 ? 255 : newRed;
+            newGreen = newGreen > 255 ? 255 : newGreen;
+            newBlue = newBlue > 255 ? 255 : newBlue;
           
-            if (newRed > 255)
-            {
-                newRed = 255;
-            }
-        
-            if (newGreen > 255)
-            {
-                newGreen = 255;
-            }
-        
-            if (newBlue > 255)
-            {
-                newBlue = 255;
-            }
-
-            // Store newly calculated values in temporary array
+            // Store final values in temporary array
             copyImage[row][pixel].rgbtRed = newRed;
             copyImage[row][pixel].rgbtGreen = newGreen;
             copyImage[row][pixel].rgbtBlue = newBlue;
@@ -256,10 +208,10 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
 
     }
 
-     // Copy new values from the copied array to the image
-    for (int i = 0; i < height; i++)
+    // Copy new values from the copied array to the image
+    for (i = 0; i < height; i++)
     {
-        for (int j = 0; j < width; j++)
+        for (j = 0; j < width; j++)
         {
             image[i][j] = copyImage[i][j];
         }
