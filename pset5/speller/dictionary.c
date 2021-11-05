@@ -110,16 +110,8 @@ bool load(const char *dictionary)
 
 
         }
-        // how to get first word = words[0].word
-        // how to get next word = words[0].next->word
-        //print_dict(table[90]);
-        // printf("Word: %s\n", words ->word);
-        // printf("Next: %s\n", words ->next->word);
-        // printf("\n");
-        // printf("Word: %s\n", words ->next->word);
-        // printf("Next: %s\n", words ->next->next->word);
 
-      
+        //print_dict(table[90]);
 
         return true;
 
