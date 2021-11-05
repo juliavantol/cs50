@@ -33,11 +33,10 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    // amount by which the volume of the original audio file should be scaled
-    // atof converts the string argument str to a floating-point number (type double)
+    // Convert string to a floating-point number
     float factor = atof(argv[3]);
 
-    // TODO: Copy header from input file to output file
+    // Copy header from input file to output file
     uint8_t header[HEADER_SIZE];
     fread(header, HEADER_SIZE, 1, input);
     fwrite(header, HEADER_SIZE, 1, output);
