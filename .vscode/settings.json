@@ -5,6 +5,10 @@
         "__node_handle": "c",
         "bitset": "c",
         "algorithm": "c",
-        "typeinfo": "c"
+        "typeinfo": "c",
+        "__bit_reference": "c",
+        "__string": "c",
+        "string": "c",
+        "string_view": "c"
     }
 }

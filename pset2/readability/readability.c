@@ -42,7 +42,7 @@ int main(void)
     
 }
 
-// Function to count all the necessaru data
+// Function to count all the necessary data
 void count_all(string text, float *letter_count, float *word_count, float *sentence_count) 
 {
     int i, n;    
