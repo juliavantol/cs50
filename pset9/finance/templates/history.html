@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Index
+{% endblock %}
+
+{% block main %}
+
+    <table class="table">
+        <thead>
+            <tr class="topRow">
+                <th>Action</th>
+                <th>Symbol</th>
+                <th>Shares</th>
+                <th>Price</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+            <tbody>
+            <!-- Loop through the database entries to display them in this table -->
+            {% for item in history %}
+                <tr>
+                <td> {{ item.action }} </td>
+                <td> {{ item.symbol }} </td>
+                <td> {{ item.shares }} </td>
+                <td> {{ item.price | usd }} </td>
+                <td> {{ item.date }} </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+    </table>
+
+
+{% endblock %}
+
+<!--Symbol	Shares	Current price per share-->
+<!--nflx	1	663.84-->
+<!--AAME	1	3.82-->
+<!--AAPL	1	160.24-->
+<!--ABEO	1	0.645-->

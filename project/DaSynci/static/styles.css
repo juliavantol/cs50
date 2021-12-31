@@ -1,0 +1,276 @@
+:root {
+    --red: #CF2500;
+    --boxshadow: 0px 1px black;
+  }
+
+.toggle_sidebar_menu {
+    width: 28px;
+    height: 20px;
+    background-color: var(--red);
+    border-bottom: 0;
+    margin-left: 85%;
+    overflow: hidden;
+    box-shadow: 0px 0px 2px 0px red;
+}
+
+#open_sidebar {
+    display: none;
+    border-bottom-left-radius: 27px;  
+    border-bottom-right-radius: 27px; 
+}
+
+#close_sidebar {
+    border-top-left-radius: 27px;  
+    border-top-right-radius: 27px; 
+
+}
+
+#toggle_arrow_down {
+    margin-left: 6px;
+    color: white;
+    text-shadow: var(--boxshadow);
+}
+
+#icon_arrow_up {
+    text-shadow: var(--boxshadow);
+}
+
+#input_track_label {
+    font-weight: 650;
+    text-shadow: 1px 1px black;
+}
+
+
+#audio_track_sidebar {
+    background-color: #141414;
+    position: relative;
+    height: auto;
+    width: 100%;
+    font-size: 11px;
+    font-family: Helvetica, sans-serif;
+    font-weight: bold;
+    color:white;
+    text-align: center;
+    overflow-x: hidden;
+    box-shadow: 0px 0px 2px 1px black;
+}
+
+#audio_track_player {
+    width: 100%;
+}
+
+#slider_container {
+    padding: 10px;
+    display: none;
+}
+
+  #volume_range_slider {
+    -webkit-appearance: none;
+    width: 100px;
+    height: 4px;
+    border-radius: 5px;
+    background: linear-gradient(90deg, rgba(255,0,0) 50%, rgba(176,177,174) 50%);
+    outline: none;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    margin-top: 9px;
+  }
+
+  #volume_range_slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: red;
+    cursor: pointer;
+  }
+
+#volume_range_slider::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: red;
+    cursor: pointer;
+  }
+
+
+
+#track_play_button {
+    background: black;
+    border: none;
+    outline: none;
+    display: inline-block;
+    position: absolute;
+    margin-top: -7px;
+    padding-right: 8px;
+}
+
+.timing_content {
+    color:white;
+}
+
+/* All containers */
+#input_container {
+    margin-top: 20px;
+    margin-left: 10px;
+    color: var(--red);
+    display: inline-block;
+    border-radius: 8px;
+}
+
+#intro_container {
+    display: none;
+    width: 100%;
+
+}
+
+#start_wrapper {
+    display:none;
+    text-align: center;
+    font-weight: 650;
+}
+
+#recover_wrapper {
+    display:none;
+    font-weight: 550;
+}
+
+#select_track_form {
+    margin-bottom: 14px;
+}
+
+#big_wrapper {
+    width: 100%;
+    display:none;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    margin-left: 15px;
+}
+
+#player_wrapper {
+    width: 520px;
+    margin-top: 10px;
+    float: left;
+    order:1;
+    height: 25px;
+}
+
+#track_player_volumecontrol {
+    width: 250px;
+    float: left;
+    order:3;
+    height: 30px;
+    margin-left: -64px;
+}
+
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+}
+
+.inputfile + label {
+    font-size: 1.10em;
+    font-weight: 500;
+    color: white;
+    background-color: var(--red);
+    padding: 4px;
+    padding-left: 40px;
+    padding-right: 40px;
+    box-shadow: 0px 0px 3px 0px var(--red);
+    border-radius: 2px;
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+    background-color: var(--red);
+}
+
+
+.inputfile + label {
+	cursor: pointer;
+}
+
+#volume_btn {
+    margin-top: 1.5px;
+    padding-left: 5px;
+    position: absolute;
+}
+
+#timing_container {
+    margin-top: 4px;
+    order:2;
+    float: left;
+    height: 20px;
+}
+
+.label_btn {
+    font-size: 1.00em;
+    font-weight: 700;
+    color: white;
+    background-color: #DF474B;
+    padding: 4px;
+    padding-left: 15px;
+    padding-right: 15px;
+    box-shadow: 0px 0px 3px 0px #DF474B;
+    border-radius: 2px;
+}
+
+#step2 {
+    display: none;
+}
+
+#step3 {
+    display: none;
+}
+
+.start_text {
+    font-size: 11px;
+}
+
+#or {
+    font-weight: normal;
+    font-size: 11px;
+}
+
+#select_track {
+    padding: 2px;
+    border-radius: 12px;
+    background-color: var(--red);
+    color: white;
+    font-weight: normal;
+    font-size: 11px;
+}
+
+#recover_menu {
+    display: none;
+    padding-bottom: 5px;
+}
+
+.custom_button_style {
+    font-size: 11px;
+    font-weight: 400;
+    color: white;
+    background-color: var(--red);
+    padding: 4px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-right: 15px;
+    outline: none;
+    font-weight: 650;
+    text-shadow: 1px 1px black;
+    border-radius: 12px;
+}
+
+.text_instructions {
+    padding-bottom: 12px; 
+    text-shadow: 2px 2px 3px rgba(255,255,255,0.1);
+
+}
+
+#save_track_form {
+    padding-top: 7px;
+    color: black;
+    font-weight: normal;
+}

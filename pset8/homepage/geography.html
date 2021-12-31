@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+        <link href="styles.css" rel="stylesheet">
+    <title>Norway</title>
+    </head>
+    <body style ="background-image: url('https://wallup.net/wp-content/uploads/2016/03/10/319357-Norway-mountain-landscape.jpg')">
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+          <a class="navbar-brand" href="#">Navbar</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item active">
+                <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="colors.html">Colors</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="geography.html">Geography</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="people.html">People</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+
+      <div class="container">
+        <form onsubmit="checkAnswers(); return false">
+             Norway is a country located in Northern Europe on the northern and western parts of the Scandinavian Peninsula. The majority of the country borders water, including
+             the Skagerrak inlet to the south, the North Sea to the southwest, the North Atlantic
+             Ocean (Norwegian Sea) to the west, and the
+             <input type="text" id="q1" size="20"> sea to the north. It has a land border with Sweden to the
+             east and a shorter border with Finland and an even shorter border with
+             <input type="text" id="q2" size="20"> to the northeast.<br><br>
+             Norway has an elongated shape, one of the longest and most rugged coastlines in the
+             world, and some 50,000 islands off its much indented coastline. It is one of the
+             world's northernmost countries, and it is one of Europe's most mountainous
+             countries, with large areas dominated by the Scandinavian Mountains. The country's
+             average elevation is
+             <input type="text" id="q3" size="20"> metres (1,510 ft), and 32 percent of the mainland is
+             located above the tree line. Its country-length chain of peaks is geologically
+             continuous with the mountains of Scotland, Ireland, and, after crossing under the
+             Atlantic Ocean, the
+             <input type="text" id="q4" size="20">  Mountains of North America. Geologists hold that
+             all these formed a single range prior to the breakup of the ancient supercontinent
+             Pangaea <p></p>
+             During the last glacial period, as well as in many earlier ice ages, virtually the entire
+             country was covered with a thick ice sheet. The movement of the ice carved out deep valleys.
+             As a result of the ice carving,
+             <input type="text" id="q5" size="20"> is the world's second deepest fjord and
+             <input type="text" id="q6" size="20"> is the deepest lake in Europe. When the ice melted, the sea filled many of
+             these valleys, creating Norway's famous fjords. The glaciers in the higher mountain areas
+             today are not remnants of the large ice sheet of the ice age—their origins are more recent.
+             The regional climate was up to 1–3 °C (1.8–5.4 °F) warmer in 7000 BC to 3000 BC in the Holocene climatic
+             optimum, (relative to the 1961-90 period), melting the remaining glaciers in the mountains almost completely during that period.
+          <br> <a href="https://en.wikipedia.org/wiki/Geography_of_Norway">Source</a>
+          <p></p>
+            <div id="feedback"></div>
+            <button type="submit" class="btn btn-primary">Check answers</button>
+         </form>
+      </div>
+
+    <div class="clear"></div>
+    <div class="footer"></div>
+
+    </body>
+    <script>
+
+    // Function to check if all the questions have been answered correctly
+    function checkAnswers() {
+        let q1 = (document.getElementById("q1").value).toLowerCase();
+        let q2 = (document.getElementById("q2").value).toLowerCase();
+        let q3 = (document.getElementById("q3").value).toLowerCase();
+        let q4 = (document.getElementById("q4").value).toLowerCase();
+        let q5 = (document.getElementById("q5").value).toLowerCase();
+        let q6 = (document.getElementById("q6").value).toLowerCase();
+        let feedback = document.getElementById("feedback");
+
+        if (q1 == "barents" && q2 == "russia" && q3 == "460" && q4 == "appalachian" && q5 == "sognefjorden" && q6 == "hornindalsvatnet") {
+            feedback.innerHTML = "<p style='color: green; font-weight: bold;'> You answered all the questions correctly! </p>";
+        }
+        else {
+            feedback.innerHTML = "<p style='color: red; font-weight: bold;'> Not all questions have been answered correctly...</p>";
+        }
+    }
+
+    </script>
+</html>

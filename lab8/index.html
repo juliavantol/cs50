@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+        <link href="styles.css" rel="stylesheet">
+        <title>Trivia!</title>
+
+        <script>
+
+            // Code to check answers to questions
+            function check(button) {
+
+                let btn = document.querySelectorAll("button");
+                let correct = document.getElementById("pass");
+                let wrong = document.getElementById("fail");
+
+                    if (btn[button].value == "Norway")
+                    {
+                        btn[button].classList.add("correct");
+                        correct.style.display = "block";
+                        wrong.style.display = "none";
+
+                    }
+                    else
+                    {
+                        btn[button].classList.add("wrong");
+                        correct.style.display = "none";
+                        wrong.style.display = "block";
+                    }
+                }
+
+            function checkText() {
+
+                let correct = document.getElementById("pass2");
+                let wrong = document.getElementById("fail2");
+                let field = document.getElementById("answer");
+                let answer = document.getElementById("answer").value;
+
+                if (answer.toLowerCase() == "eddie redmayne")
+                {
+                    field.classList.add("correct");
+                    correct.style.display = "block";
+                    wrong.style.display = "none";
+                }
+                else
+                {
+                    field.classList.add("wrong");
+                    correct.style.display = "none";
+                    wrong.style.display = "block";
+                }
+            }
+
+        </script>
+
+    </head>
+    <body>
+
+        <div class="jumbotron">
+            <h1>Trivia!</h1>
+        </div>
+
+        <div class="container">
+
+            <div class="section">
+                <h2>Part 1: Multiple Choice </h2>
+                <hr>
+
+                <!-- Multiple choice question  -->
+                <h3> In which country is Europe's highest waterfall? </h3>
+                <h4 hidden id="pass" class="fail"> Correct! <br> </h4>
+                <h4 hidden id="fail" class="fail"> Incorrect <br> </h4>
+
+                <form name="form" class="form" onsubmit="return false">
+                    <button onclick="check(0)" value="Austria">Austria</button>
+                    <button onclick="check(1)" value="Iceland">Iceland</button>
+                    <button onclick="check(2)" value="Croatia">Croatia</button>
+                    <button onclick="check(3)" value="Norway">Norway</button>
+                    <button onclick="check(4)" value="Finland">Finland</button>
+                </form>
+
+
+            </div>
+
+            <div class="section">
+                <h2>Part 2: Free Response</h2>
+                <hr>
+
+                <h3> Which English actor won the 2014 Academy Award for
+                    best actor for his role in The Theory of Everything? </h3>
+                <h4 hidden id="pass2" class="fail"> Correct! <br> </h4>
+                <h4 hidden id="fail2" class="fail"> Incorrect <br> </h4>
+
+                <form onsubmit="return false">
+                  <input type="text" id="answer" name="answer">
+                  <input onclick="checkTest()"type="submit" value="Check answer">
+                </form>
+
+            </div>
+
+        </div>
+    </body>
+</html>
